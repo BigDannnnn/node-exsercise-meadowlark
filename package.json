@@ -1,0 +1,9 @@
+{
+  "name": "meadowlark",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "express": "^4.16.4",
+    "express3-handlebars": "^0.5.2"
+  }
+}
