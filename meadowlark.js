@@ -1,3 +1,6 @@
+var fortune = require('./lib/fortune.js')
+
+
 var express = require('express');
 
 var app = express();
@@ -22,10 +25,8 @@ app.get('/', (req, res)=>{
 app.get('/about', (req, res)=>{
     // res.type('text/plain');
     // res.send('about ...meadowlark travel')
-    var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-    res.render('about', {fortune: randomFortune});
+    res.render('about', {fortune: fortune.getFortune()});
 })
-
 
 
 // 定制 404 页面 catch-all 处理器（中间件）
@@ -52,10 +53,3 @@ app.listen(app.get('port'), ()=> {
         'EXPRESS START ON http://localhost:' + app.get('port')
     )
 })
-
-var fortunes = [
-    "conquer your fears or they will conque you",
-    "river need springs",
-    "do not fear what you don't know",
-    "whenever possible, keep it simple",
-]
