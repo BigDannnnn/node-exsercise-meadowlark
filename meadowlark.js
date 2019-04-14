@@ -17,6 +17,15 @@ app.set('view engine', 'handlebars');
 
 app.set('port', process.env.PORT || 3000); // 这里是什么意思 ？环境变量port 是什么意思
 
+// 检查 url 查询字符串的中间件
+// 必须放在所有路径之前
+app.use(function (req, res, next) {
+    res.locals.showTests = app.get('env') !== 'production'
+                        && req.query.test === '1';
+    next();
+})
+
+// 所有路由
 app.get('/', (req, res)=>{
     // res.type('text/plain');
     // res.send('meadowlark travel')
@@ -25,7 +34,10 @@ app.get('/', (req, res)=>{
 app.get('/about', (req, res)=>{
     // res.type('text/plain');
     // res.send('about ...meadowlark travel')
-    res.render('about', {fortune: fortune.getFortune()});
+    res.render('about', {
+        fortune: fortune.getFortune(),
+        pageTestScript:'/qa/tests-about.js'
+    });
 })
 
 
@@ -43,9 +55,6 @@ app.use(function (err, req, res, next) {
     console.error(err.stack);
     res.status(500);
     res.render('500');
-    // res.type('text/plain');
-    // res.status(500);
-    // res.send('505 Server Error');
 });
 
 app.listen(app.get('port'), ()=> {
